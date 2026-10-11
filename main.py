@@ -8,14 +8,14 @@ def main():
     pygame.init()
 
     ANCHO_VENTANA = 1050
-    ALTO_VENTANA = 650  # Ampliado para incluir los gráficos abajo
+    ALTO_VENTANA = 650
     ANCHO_SIM = 700
 
     ventana = pygame.display.set_mode((ANCHO_VENTANA, ALTO_VENTANA))
-    pygame.display.set_caption("Motor Físico - Banco de Pruebas con Observador y Gráficos")
+    pygame.display.set_caption("Simulador Físico - Brazo / Péndulo 1-DOF")
     reloj = pygame.time.Clock()
 
-    fisica = MotorFisico2D(ancho_sim=ANCHO_SIM, alto_sim=450) # Coincide con la caja superior
+    fisica = MotorFisico2D(ancho_sim=ANCHO_SIM, alto_sim=450)
     renderizador = Renderer(ventana=ventana, ancho_sim=ANCHO_SIM, alto_ventana=ALTO_VENTANA)
 
     corriendo = True
@@ -27,7 +27,8 @@ def main():
                 corriendo = False
             elif evento.type == pygame.KEYDOWN:
                 if evento.key == pygame.K_SPACE:
-                    fisica.aplicar_impulso(np.array([np.random.uniform(-50, 50), -250.0]))
+                    # Aplicar un golpe angular aleatorio al presionar espacio
+                    fisica.aplicar_impulso(np.random.uniform(-3.0, 3.0))
             
             renderizador.manejar_eventos_sliders(evento)
 

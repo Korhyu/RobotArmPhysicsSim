@@ -29,13 +29,14 @@ class Slider:
         if evento.type == pygame.MOUSEBUTTONDOWN:
             if self.rect.collidepoint(evento.pos) or pygame.Rect(self.rect.x, self.rect.y - 10, self.rect.width, self.rect.height + 20).collidepoint(evento.pos):
                 self.arrastrando = True
-                self.handle_x = evento.pos[0]
+                # Limitar el movimiento del handle a los bordes de la barra
+                self.handle_x = max(self.rect.x, min(evento.pos[0], self.rect.x + self.rect.width))
                 self.valor = self.pixel_a_valor(self.handle_x)
         elif evento.type == pygame.MOUSEBUTTONUP:
             self.arrastrando = False
         elif evento.type == pygame.MOUSEMOTION:
             if self.arrastrando:
-                self.handle_x = evento.pos[0]
+                self.handle_x = max(self.rect.x, min(evento.pos[0], self.rect.x + self.rect.width))
                 self.valor = self.pixel_a_valor(self.handle_x)
 
     def dibujar(self, superficie):
